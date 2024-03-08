@@ -1,0 +1,25 @@
+# Importar módulos necessários
+using namespace System.Net
+
+# Definir a função principal
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    # Obter credenciais
+    username = "<seu_nome_de_usuário>"
+    password = "<sua_senha>"
+    
+    # Conectar à VM
+    session = New-PSSession -ComputerName <nome_da_VM> -Credential (New-Object System.Management.Automation.PSCredential($username, (ConvertTo-SecureString $password -AsPlainText -Force)))
+
+    # Lógica de Login (exemplo)
+    Invoke-Command -Session $session -ScriptBlock {
+        # Seu código de login aqui
+    }
+
+    # Fechar a sessão
+    Remove-PSSession $session
+
+    # Retornar resposta
+    return func.HttpResponse(
+        "Login realizado com sucesso",
+        status_code=200
+    )
